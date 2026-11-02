@@ -1,45 +1,42 @@
 import { useRef, useState } from 'react';
 import { IRefPhaserGame, PhaserGame } from './PhaserGame';
-import { MainMenu } from './game/scenes/MainMenu';
+import MainMenu from './MainMenu';
+import GameControls from './GameControls';
+import GameOverUI from './GameOverUI';
+
+type SceneKey = 'MainMenu' | 'Game' | 'GameOver';
 
 function App()
 {
-    // The sprite can only be moved in the MainMenu Scene
-    const [canMoveSprite, setCanMoveSprite] = useState(true);
+    const [activeScene, setActiveScene] = useState('MainMenu');
 
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef<IRefPhaserGame | null>(null);
 
-    const changeScene = () => {
+    const changeScene = (sceneKey: SceneKey) => {
+        const scene = phaserRef.current?.scene;
 
-        if(phaserRef.current)
-        {     
-            const scene = phaserRef.current.scene as MainMenu;
-            
-            if (scene)
-            {
-                scene.changeScene();
-            }
+        if (scene) {
+            scene.scene.start(sceneKey);
         }
     }
 
     // Event emitted from the PhaserGame component
     const currentScene = (scene: Phaser.Scene) => {
-
-        setCanMoveSprite(scene.scene.key !== 'MainMenu');
-        
+        setActiveScene(scene.scene.key);
     }
 
     return (
         <div id="app">
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
-            <div>
-                <div className="menu-ui">
-                    <h1>Are you ready to talk money?</h1>
-                    <input id="player-name" type="text" placeholder="Enter your name" />
-                    <button className="button" onClick={changeScene}>Start</button>
-                </div>
-            </div>
+            {activeScene === 'MainMenu' && <MainMenu onStart={() => changeScene('Game')} />}
+            {activeScene === 'Game' && <GameControls onEnd={() => changeScene('GameOver')} />}
+            {activeScene === 'GameOver' && (
+                <GameOverUI
+                    onRestart={() => changeScene('Game')}
+                    onMainMenu={() => changeScene('MainMenu')}
+                />
+            )}
         </div>
     )
 }

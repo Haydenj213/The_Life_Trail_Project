@@ -47,6 +47,26 @@ body {
     }
 }
 
+.game-ui {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    left: auto;
+    top: auto;
+    transform: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1;
+}
+
+.game-over-ui {
+    right: auto;
+    left: 50%;
+    bottom: 8%;
+    transform: translateX(-50%);
+}
+
 .menu-ui {
     position: fixed;
     left: 50%;
@@ -60,6 +80,6 @@ body {
 
 .menu-ui h1 {
     color:#000000;
-    margin: 0;
+    padding-top: 5em;
     text-align: center;
 }
