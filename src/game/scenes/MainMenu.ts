@@ -21,8 +21,8 @@ export class MainMenu extends Scene
         this.logo = this.add.image(512, 300, 'logo').setDepth(100);
 
         this.title = this.add.text(512, 460, 'Main Menu', {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+            fontFamily: 'Arial Black', fontSize: 38, color: '#0d0b0b',
+            stroke: '#fffdfd', strokeThickness: 3,
             align: 'center'
         }).setOrigin(0.5).setDepth(100);
 
@@ -38,39 +38,5 @@ export class MainMenu extends Scene
         }
 
         this.scene.start('Game');
-    }
-
-    moveLogo (vueCallback: ({ x, y }: { x: number, y: number }) => void)
-    {
-        if (this.logoTween)
-        {
-            if (this.logoTween.isPlaying())
-            {
-                this.logoTween.pause();
-            }
-            else
-            {
-                this.logoTween.play();
-            }
-        } 
-        else
-        {
-            this.logoTween = this.tweens.add({
-                targets: this.logo,
-                x: { value: 750, duration: 3000, ease: 'Back.easeInOut' },
-                y: { value: 80, duration: 1500, ease: 'Sine.easeOut' },
-                yoyo: true,
-                repeat: -1,
-                onUpdate: () => {
-                    if (vueCallback)
-                    {
-                        vueCallback({
-                            x: Math.floor(this.logo.x),
-                            y: Math.floor(this.logo.y)
-                        });
-                    }
-                }
-            });
-        }
     }
 }
