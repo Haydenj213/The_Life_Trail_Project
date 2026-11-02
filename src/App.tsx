@@ -34,26 +34,10 @@ function App()
         <div id="app">
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
             <div>
-                <div>
-                    <h1
-                        style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-                    >
-                        Welcome to The Life Trail Project
-                    </h1>
-                    <input 
-                        type="text" 
-                        placeholder="Enter your name" 
-                        style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-                    />
-                </div>
-                <div>
-                    <button
-                        className="button"
-                        onClick={changeScene}
-                        style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-                    >
-                        Start
-                    </button>
+                <div className="menu-ui">
+                    <h1>Are you ready to talk money?</h1>
+                    <input id="player-name" type="text" placeholder="Enter your name" />
+                    <button className="button" onClick={changeScene}>Start</button>
                 </div>
             </div>
         </div>
